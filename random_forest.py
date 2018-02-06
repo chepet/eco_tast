@@ -27,3 +27,14 @@ with open('random_forest.txt', 'w') as file:
 #построение диаграммы рассеивания оценок и ответов
 utils.predict_original_plot(X_test, Y_test, grid_cv.best_estimator_)
 
+#композиция
+pr = []
+for i in range(100):
+    grid_cv.best_estimator_.random_state = i
+    grid_cv.best_estimator_.fit(X_train, Y_train)
+    pr.append(mean_absolute_error(grid_cv.best_estimator_.predict(X_test),
+                                       Y_test))
+
+print(sum(pr) / len(pr))
+print(grid_cv.best_estimator_)
+    
